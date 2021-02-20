@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace CodelyTv\Apps\Mooc\Backend\Controller\Courses;
 
 use CodelyTv\Mooc\Courses\Application\CourseCreator;
+use CodelyTv\Mooc\Courses\Application\CreateCourseRequest;
 use CodelyTv\Shared\Domain\RandomNumberGenerator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +25,7 @@ final class CoursesPutController
         $name = $request->get('name');
         $duration = $request->get('duration');
 
-        ($this->creator)($id, $name, $duration);
+        ($this->creator)(new CreateCourseRequest($id, $name, $duration));
 
         return new Response('', Response::HTTP_CREATED);
     }

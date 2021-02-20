@@ -5,6 +5,9 @@ namespace CodelyTv\Mooc\Courses\Application;
 
 
 use CodelyTv\Mooc\Courses\Domain\Course;
+use CodelyTv\Mooc\Courses\Domain\CourseDuration;
+use CodelyTv\Mooc\Courses\Domain\CourseId;
+use CodelyTv\Mooc\Courses\Domain\CourseName;
 use CodelyTv\Mooc\Courses\Domain\CourseRepository;
 
 class CourseCreator
@@ -16,9 +19,9 @@ class CourseCreator
         $this->repository = $repository;
     }
 
-    public function __invoke(string $id, string $name, string $duration)
+    public function __invoke(CreateCourseRequest $request)
     {
-        $course = new Course($id, $name, $duration);
+        $course = new Course(new CourseId($request->id()), new CourseName($request->name()), new CourseDuration($request->duration()));
 
         $this->repository->save($course);
 
